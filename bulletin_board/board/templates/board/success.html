@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1>Отклик отправлен!</h1>
+<a href="{% url 'board:post_list' %}">К списку постов</a>
+{% endblock content %}

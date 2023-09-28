@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+    <a href="{% url 'account:logout' %}" style="float:right;"><button>Выйти</button></a>
+{% else %}
+    <a href="{% url 'account:login' %}" style="float:right;"><button>Войти</button></a>
+{% endif %}
+{% if response_list %}
+    {% for response in response_list %}
+        {% if response.status == 'Y' or response.status is None %}
+            <p>{{ response.creation_time|date:'d.m.y' }}</p>
+            <p>{{ response.comment }}</p>
+            <p>Отклик на "{{ response.post.title }}" от пользователя {{ response.user }}</p>
+                {% if response.status == 'Y' %}
+                    <p>{{ response.get_status_display }}</p>
+                {% else %}
+                    <a href="{% url 'board:accept' pk=response.pk %}"><button>Принять</button></a>
+                    <a href="{% url 'board:deny' pk=response.pk %}"><button>Отклонить</button></a>
+                {% endif %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    Откликов нет
+{% endif %}
+{% endblock content %}

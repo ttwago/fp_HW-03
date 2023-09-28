@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+    <a href="{% url 'account:logout' %}"><button>Выйти</button></a>
+    <a href="{% url 'board:create_post' %}"><button> Написать объявление </button></a>
+{% else %}
+    <a href="{% url 'account:login' %}"><button>Войти</button></a>
+{% endif %}
+{% if post_list %}
+    {% for post in post_list %}
+        <p><h2>{{ post.title }}</h2></p>
+        <hr>
+        <p>{{ post.comment|safe }}</p>
+        <p><a href="{% url 'board:respond' pk=post.pk %}"><button>Откликнуться</button></a></p>
+        <p>Создано пользователем {{ post.user }} в категории "{{ post.get_category_display }}"</p>
+        <hr>
+    {% endfor %}
+{% else %}
+    Объявлений нет
+{% endif %}
+{% endblock content %}

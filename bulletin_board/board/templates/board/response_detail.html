@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{{ response.creation_time|date:'d.m.y' }}
+<hr>
+{{ response.comment }}
+<hr>
+Отправил: {{ response.user }}<br>
+{% if response.status == 'Y' or response.status is None %}
+    {% if response.status == 'Y' %}
+        <p>{{ response.get_status_display }}</p>
+    {% else %}
+        <a href="{% url 'board:accept' pk=response.pk %}"><button>Принять</button></a>
+        <a href="{% url 'board:deny' pk=response.pk %}"><button>Отклонить</button></a>
+    {% endif %}
+{% endif %}
+{% endblock content %}

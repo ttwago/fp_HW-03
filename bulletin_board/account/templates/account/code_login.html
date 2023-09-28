@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} code_login {% endblock %}
+
+{% block content %}
+<h2> Проверьте почту и введите код </h2>
+<form method="post" action="{% url 'account:code_login' %}">
+  {% csrf_token %}
+  {{ message }}
+  {{ form.as_p }}
+  <input type="submit" value="Войти">
+  <input type="hidden" name="next" value="{{next}}" />
+</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if user.is_authenticated %}
+    <a href="{% url 'account:logout' %}" style="float:right;"><button>Выйти</button></a>
+{% else %}
+    <a href="{% url 'account:login' %}" style="float:right;"><button>Войти</button></a>
+{% endif %}
+<h1>{{ post.title}}</h1>
+{{ post.creation_time|date:'d.m.y' }}
+<hr>
+{{ post.comment|safe }}
+<hr>
+Отправил: {{ post.user }}<br>
+Категория: {{ post.get_category_display }}
+<p><a href="{% url 'board:update_post' pk=post.pk %}"><button>Редактировать</button></a></p>
+{% endblock content %}
